@@ -1,0 +1,30 @@
+{
+  "name": "fit",
+  "version": "0.0.1",
+  "description": "Fit machine learning models on data",
+  "main": "src/process.js",
+  "scripts": {
+    "build": "browserify src/process.js -s Process | uglifyjs -cm > process.js",
+    "build-dev": "browserify src/process.js -s Process > process.js",
+    "watch": "nodemon --watch src --ext js,css,html --exec 'npm run build-dev'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/statsim/vis.git"
+  },
+  "author": "Anton Zemlyansky",
+  "license": "MIT",
+  "devDependencies": {
+    "browserify": "^16.5.1",
+    "nodemon": "^2.0.3",
+    "uglify-es": "^3.3.9"
+  },
+  "dependencies": {
+    "@jsmlt/jsmlt": "^0.1.18",
+    "cplot": "0.0.3",
+    "csv-parse": "^4.9.0",
+    "online-mean": "^1.1.2",
+    "online-std": "^1.0.2"
+  }
+}

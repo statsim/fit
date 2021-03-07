@@ -222,6 +222,6 @@ function loadXGBoost(xgboost) {
   return XGBoost;
 }
 
-var xgboostWASM = require('../wasm/xgboost.js');
+var xgboostWASM = require('./xgboost.js');
 
 module.exports = xgboostWASM.isReady.then((l) => loadXGBoost(l));

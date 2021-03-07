@@ -1,4 +1,4 @@
-const wasmPath = "http://localhost:8080/wasm/xgboost.wasm"
+const wasmPath = "https://statsim.com/assets/xgboost.wasm"
 const path = require("path");
 var Module = module.exports = {};
 if (typeof self === "undefined")

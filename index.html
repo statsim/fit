@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>Fit XGBoost models online | StatSim</title>
+    <title>Fit XGBoost models online | StatSim Fit</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link type="text/css" rel="stylesheet" href="https://statsim.com/port/css/port.css" media="screen"/>
     <link rel="icon" type="image/png" href="https://statsim.com/app/images/favicon-32x32.png" sizes="32x32">
@@ -12,8 +12,7 @@
     <style>
       body {
         background-color: #ffffff;
-        opacity: 0.9;
-        background-image: repeating-radial-gradient( circle at 0 0, transparent 0, #ffffff 80px ), repeating-linear-gradient( #e9e9e955, #e9e9e965 )
+        background: #f5f5f5;
       }
       a { color: #7100E3 }
       h4 { font-weight: 700; }
@@ -21,21 +20,39 @@
       .file-field .btn:hover { background: #AAA }
       .btn, .port-btn { background: #7100E3 }
       .btn:hover, .port-btn:hover { background: #5700AD }
-      .status-bar {
+      .grey-bar {
         background: white;
         box-shadow: 0px 1px 25px #ebebeb;
+      }
+      ol {
+        background:#f5f5f5;
+        padding: 20px 0 20px 25px;
+        border-radius: 10px;
+        margin: 50px 0 20px 0;
+        font-size: 16px;
+        list-style: none;
+        counter-reset: custom-counter;
+      }
+      ol li {
+        counter-increment: custom-counter;
+      }
+      ol li::before {
+        content: counter(custom-counter) ". ";
+        color: #BBB;
+        font-weight: bold;
+        margin-right: 5px;
       }
       .spinner-green, .spinner-green-only { border-color: #3030B7 }
       #outputs:empty { display: none; }
     </style>
   </head>
   <body>
-    <div class="status-bar">
+    <div class="status-bar grey-bar">
       <div class="container">
         <div class="row">
           <div class="col s12" style="font-size: 14px;">
             <div id="menu"></div>
-            <a href="https://statsim.com/">StatSim</a> → <b>Fit</b> | <a href="https://statsim.com/docs/category/fit/">Docs</a>
+            <a href="https://statsim.com/">StatSim</a> → <b>Fit</b>
             <span class="version">Version: 0.0.2</span>
           </div>
         </div>
@@ -44,70 +61,75 @@
 
     <div class="container">
       <div class="row">
-        <div class="col m12">
-          <h1>Fit XGBoost models online</h1>
-          <h2>Easily fit a machine learning model and predict new values</h2>
-          <ol>
-            <li>Select a training dataset in the <b>CSV</b> format</li>
-            <li>Select a dataset for prediction</li>
-            <li>Choose a target variable (variable you want to predict)</li>
-            <li>Customize <b>XGBoost</b> model</li>
-            <li>Click <b>Run</b></li>
-          </ol>
-        </div>
-      </div>
-
-      <div class="row">
         <div id="port-container"></div>
       </div>
+    </div>
 
-      <div class="row features">
-        <div class="col m3 feature">
-          <h3>
-            The best model for tabular data
-          </h3>
-          <p>
-            XGBoost is probably the best model for tabular data with independent observations (not time-series). It's based on an ensemble of decision trees and won a lot of public competitions. XGBoost supports classification, regression, count, and survival modes.
-          </p>
+    <div id="description" class="grey-bar">
+      <div class="container">
+        <div class="row">
+          <div class="col m12">
+            <h1>Fit XGBoost models online</h1>
+            <h2>Easily fit a machine learning model and predict new values</h2>
+            <ol>
+              <li>Select a training dataset in the <b>CSV</b> format</li>
+              <li>Select a dataset for prediction</li>
+              <li>Choose a target variable (variable you want to predict)</li>
+              <li>Customize <b>XGBoost</b> model</li>
+              <li>Click <b>Run</b></li>
+            </ol>
+          </div>
         </div>
-        <div class="col m3 feature">
-          <h3>
-            Cross-validation for small datasets
-          </h3>
-          <p>
-            In many cases, a dataset is too small to evaluate a model performance correctly. A standard practice of splitting data on training and test sets gives unreliable results. Cross-validation helps with this problem by running multiple splits iteratively and calculating a more robust score based on those runs.
-          </p>
-        </div>
-        <div class="col m3 feature">
-          <h3>
-            Download a model and its predictions
-          </h3>
-          <p>
-            After a model is fit and made predictions, you can download a resulting CSV file for further usage. It includes the same input columns together with the predicted target column. You can also download the fitted model in JSON format and charts with XGBoost performance on this dataset as SVGs.
-          </p>
-        </div>
-        <div class="col m3 feature">
-          <h3>
-            Client-side processing
-          </h3>
-          <p>
-            XGBoost is a native C++ library ported to WebAssembly and wrapped in this web application. When you load a dataset, it's processed using a virtual machine running in your browser. That means no single byte of your data is leaving a device that runs this web app.
-          </p>
-        </div>
-      </div>
 
-      <div class="row">
-        <div class="col m12">
-          <small>
-            If you enjoyed the app, star us on GitHub. To report errors, create an issue.<br>
-          </small>
-          <p>
-            <a class="github-button" href="https://github.com/statsim/fit" data-icon="octicon-star" data-show-count="true" aria-label="Star statsim/fit on GitHub">Star</a>
-            <a class="github-button" href="https://github.com/statsim/fit/issues" data-icon="octicon-issue-opened" data-show-count="true" aria-label="Issue statsim/fit on GitHub">Issue</a>
-          </p>
+        <div class="row features">
+          <div class="col m3 feature">
+            <h3>
+              The best model for tabular data
+            </h3>
+            <p>
+              XGBoost is probably the best model for tabular data with independent observations (not time-series). It's based on an ensemble of decision trees and won a lot of public competitions. XGBoost supports classification, regression, count, and survival modes.
+            </p>
+          </div>
+          <div class="col m3 feature">
+            <h3>
+              Cross-validation for small datasets
+            </h3>
+            <p>
+              In many cases, a dataset is too small to evaluate a model performance correctly. A standard practice of splitting data on training and test sets gives unreliable results. Cross-validation helps with this problem by running multiple splits iteratively and calculating a more robust score based on those runs.
+            </p>
+          </div>
+          <div class="col m3 feature">
+            <h3>
+              Download a model and its predictions
+            </h3>
+            <p>
+              After a model is fit and made predictions, you can download a resulting CSV file for further usage. It includes the same input columns together with the predicted target column. You can also download the fitted model in JSON format and charts with XGBoost performance on this dataset as SVGs.
+            </p>
+          </div>
+          <div class="col m3 feature">
+            <h3>
+              Client-side processing
+            </h3>
+            <p>
+              XGBoost is a native C++ library ported to WebAssembly and wrapped in this web application. When you load a dataset, it's processed using a virtual machine running in your browser. That means no single byte of your data is leaving a device that runs this web app.
+            </p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col m12">
+            <small>
+              If you enjoyed the app, star us on GitHub. To report errors, create an issue.<br>
+            </small>
+            <p>
+              <a class="github-button" href="https://github.com/statsim/fit" data-icon="octicon-star" data-show-count="true" aria-label="Star statsim/fit on GitHub">Star</a>
+              <a class="github-button" href="https://github.com/statsim/fit/issues" data-icon="octicon-issue-opened" data-show-count="true" aria-label="Issue statsim/fit on GitHub">Issue</a>
+            </p>
+          </div>
         </div>
       </div>
     </div>
+
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://statsim.com/port/dist/port.js"></script> 
